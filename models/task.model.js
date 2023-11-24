@@ -16,6 +16,10 @@ const taskSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  status:{
+    type: String,
+    default:"ToDo"
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
