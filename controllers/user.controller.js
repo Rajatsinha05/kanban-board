@@ -3,9 +3,9 @@ const User = require("../models/user.model");
 
 const loginHandler = async (req, res) => {
   try {
-    const { username, password, email } = req.body;
+    const { password, email } = req.body;
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -34,7 +34,7 @@ const signupHandler = async (req, res) => {
       return res.status(400).json({ error: "email already exists" });
     }
 
-    // Create a new user
+    
     const newUser = new User({
       username,
       email,
@@ -43,10 +43,10 @@ const signupHandler = async (req, res) => {
 
     await newUser.save();
 
-    // Generate a JWT token for the newly created user
+
     const token = generateToken(newUser);
 
-    // Send the token in the response
+
     res.json({ token });
   } catch (error) {
     console.error("Signup error:", error.message);
@@ -54,7 +54,7 @@ const signupHandler = async (req, res) => {
   }
 };
 
-// Function to generate a JWT token
+
 const generateToken = (user) => {
   const payload = {
     userId: user.id,
