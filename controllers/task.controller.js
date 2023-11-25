@@ -36,7 +36,7 @@ task.get("/", verifyToken, async (req, res) => {
 });
 
 // Update a task
-task.patch("/tasks/:taskId", verifyToken, async (req, res) => {
+task.patch("/update/:taskId", verifyToken, async (req, res) => {
   try {
     const updatedTask = await Task.findByIdAndUpdate(
       req.params.taskId,
@@ -54,7 +54,7 @@ task.patch("/tasks/:taskId", verifyToken, async (req, res) => {
 });
 
 // Delete a task
-task.delete("/tasks/:taskId", verifyToken, async (req, res) => {
+task.delete("/delete/:taskId", verifyToken, async (req, res) => {
   try {
     const deletedTask = await Task.findOneAndDelete({
       id: req.params.taskId,
