@@ -1,9 +1,10 @@
 const express=require("express")
 const connectDB = require("./config/db")
 const router = require("./routes/user.route")
-const task = require("./controllers/task.controller")
+
 require("dotenv").config()
 const cors=require("cors")
+const task = require("./routes/task.route")
 const app=express()
 app.use(cors())
 app.use((req, res, next) => {

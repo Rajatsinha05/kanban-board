@@ -1,15 +1,11 @@
-const { Router } = require("express");
 const Task = require("../models/task.model");
 const verifyToken = require("../middlewares/auth");
-const task = Router();
 
 // Create a new task
-task.post("/create", verifyToken, async (req, res) => {
-  
+const Create = async (req, res) => {
   try {
     const { title, description, dueDate, assignee, status } = req.body;
     const createdBy = req.user.userId;
-    
 
     const newTask = await Task.create({
       title,
@@ -24,20 +20,20 @@ task.post("/create", verifyToken, async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }
-});
+};
 
 // Get all tasks
-task.get("/", verifyToken, async (req, res) => {
+const Get = async (req, res) => {
   try {
     const tasks = await Task.find({ createdBy: req.user.userId });
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }
-});
+};
 
 // Update a task
-task.patch("/update/:taskId", verifyToken, async (req, res) => {
+const Update = async (req, res) => {
   try {
     const updatedTask = await Task.findByIdAndUpdate(
       req.params.taskId,
@@ -52,16 +48,13 @@ task.patch("/update/:taskId", verifyToken, async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }
-});
+};
 
 // Delete a task
-task.delete("/delete/:taskId", verifyToken, async (req, res) => {
+const Delete = async (req, res) => {
   try {
-    const deletedTask = await Task.findOneAndDelete({
-      id: req.params.taskId,
-  
-    });
-
+    const deletedTask = await Task.findByIdAndDelete(req.params.taskId);
+    console.log(deletedTask);
     if (!deletedTask) {
       return res.status(404).json({ message: "Task not found" });
     }
@@ -70,5 +63,5 @@ task.delete("/delete/:taskId", verifyToken, async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }
-});
-module.exports = task;
+};
+module.exports = { Create, Update, Get, Delete };
