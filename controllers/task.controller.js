@@ -5,10 +5,11 @@ const task = Router();
 
 // Create a new task
 task.post("/create", verifyToken, async (req, res) => {
+  
   try {
     const { title, description, dueDate, assignee, status } = req.body;
     const createdBy = req.user.userId;
-    console.log("createdBy: ", createdBy);
+    
 
     const newTask = await Task.create({
       title,

@@ -15,7 +15,7 @@ const loginHandler = async (req, res) => {
     const token = generateToken(user);
     res.json({ token });
   } catch (error) {
-    console.error("Login error:", error.message);
+    
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -38,11 +38,11 @@ const signupHandler = async (req, res) => {
     await newUser.save();
 
     const token = generateToken(newUser);
-    console.log("token: ", token);
+    
 
     res.json({ token });
   } catch (error) {
-    console.error("Signup error:", error.message);
+    
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -53,7 +53,7 @@ const generateToken = (user) => {
   };
 
   const options = {
-    expiresIn: "1h",
+    expiresIn: "24h",
   };
   const token = jwt.sign(payload, "gurucool", options);
   return token;
