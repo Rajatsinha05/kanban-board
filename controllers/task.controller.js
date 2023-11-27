@@ -59,7 +59,7 @@ task.delete("/delete/:taskId", verifyToken, async (req, res) => {
   try {
     const deletedTask = await Task.findOneAndDelete({
       id: req.params.taskId,
-      createdBy: req.user.userId,
+  
     });
 
     if (!deletedTask) {
